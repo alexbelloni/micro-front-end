@@ -2,14 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
+import reportWebVitals from './reportWebVitals';
 
 window.renderCats = (containerId, history) => {
   ReactDOM.render(
     <App history={history} />,
     document.getElementById(containerId),
   );
-  serviceWorker.unregister();
 };
 
 window.unmountCats = containerId => {
@@ -18,5 +17,6 @@ window.unmountCats = containerId => {
 
 if (!document.getElementById('Cats-container')) {
   ReactDOM.render(<App />, document.getElementById('root'));
-  serviceWorker.unregister();
 }
+
+reportWebVitals();
