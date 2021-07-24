@@ -22,6 +22,7 @@ export default function RandomCat() {
     <div>
       <header>
         <h3>Cat of the day</h3>
+        <span>{new Date().toString()}</span>
         <div>
           <button onClick={() => fetchRandomCat()}>New Cat</button>
         </div>
