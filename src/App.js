@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import MicroFrontend from "./MicroFrontend";
 
 import "./App.css";
 
-const defaultHistory = createBrowserHistory();
+createBrowserHistory();
 
 const {
   REACT_APP_DOGS_HOST: dogsHost,
@@ -21,12 +21,12 @@ function Header() {
   );
 }
 
-function Dogs({ history }) {
-  return <MicroFrontend history={history} host={dogsHost} name="Dogs" />;
+function Dogs({ history, fnc }) {
+  return <MicroFrontend history={history} host={dogsHost} name="Dogs" fnc={fnc} />;
 }
 
-function Cats({ history }) {
-  return <MicroFrontend history={history} host={catsHost} name="Cats" />;
+function Cats({ history, fnc }) {
+  return <MicroFrontend history={history} host={catsHost} name="Cats" fnc={fnc} />;
 }
 
 function GreetingCat({ history }) {
@@ -42,17 +42,22 @@ function GreetingCat({ history }) {
 
 function Home({ history }) {
   const [input, setInput] = useState("");
+  const [isVisible, setIsVisible] = useState(false);
+
+  setTimeout(() => {
+    setIsVisible(true);
+  }, 3000);
 
   const handleOnClick = () => {
     history.push(`/cat/${input}`);
   };
-
+  
   return (
     <div>
       <Header />
       <div className="home">
         <input
-          placeholder="Insert a greeting"
+          placeholder="Insert a greeting!"
           defaultValue={input}
           onBlur={(e) => setInput(e.target.value)}
         />
@@ -61,11 +66,11 @@ function Home({ history }) {
 
       <div className="home">
         <div className="content">
-          <div className="cat">
-            <Cats />
+          <div className="cat" style={{minWidth: "100px", minHeight: "100px"}}>
+            {isVisible ? <Cats fnc={window.renderCats} /> : "loading..."}
           </div>
-          <div className="dog">
-            <Dogs />
+          <div className="dog" style={{minWidth: "100px", minHeight: "100px"}}>
+            {isVisible ? <Dogs fnc={window.renderDogs} /> : "loading..."}
           </div>
         </div>
       </div>
